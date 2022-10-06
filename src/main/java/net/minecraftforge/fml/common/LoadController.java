@@ -27,6 +27,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLStateEvent;
 import net.minecraftforge.fml.common.functions.ArtifactVersionNameFunction;
 import net.minecraftforge.fml.common.versioning.ArtifactVersion;
+import net.minecraftforge.fml.relauncher.FMLSecurityManager;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.ThreadContext;
@@ -345,14 +346,6 @@ public class LoadController
         return null;
     }
     private FMLSecurityManager accessibleManager = new FMLSecurityManager();
-
-    class FMLSecurityManager extends SecurityManager
-    {
-        Class<?>[] getStackClasses()
-        {
-            return getClassContext();
-        }
-    }
 
     Class<?>[] getCallingStack()
     {

@@ -6,10 +6,16 @@ import java.security.Permission;
  * A custom security manager stopping certain events from happening
  * unexpectedly.
  *
- * @author cpw
+ * @author cpw 
+ * @author pandaninjas
  *
  */
-public class FMLSecurityManager extends SecurityManager {
+public final class FMLSecurityManager extends SecurityManager {
+		
+	public Class<?>[] getStackClasses() {
+        return getClassContext();
+    }
+	
     @Override
     public void checkPermission(Permission perm)
     {
@@ -33,6 +39,15 @@ public class FMLSecurityManager extends SecurityManager {
         else if ("setSecurityManager".equals(permName))
         {
             throw new SecurityException("Cannot replace the FML security manager");
+        } else if ("createSecurityManager".equals(permName)) {
+        	for (Class<?> c: getClassContext()) {
+        		if (c.getName().equals("javax.crypto.JceSecurityManager")) {
+        			return; // jce is allowed to use its security manager
+        		} else if (c.getName().equals("net.minecraftforge.fml.relauncher.FMLSecurityManager")) {
+        			return;
+        		}
+        	}
+        	throw new SecurityException("Cannot create a SecurityManager");
         }
         return;
     }
@@ -43,6 +58,11 @@ public class FMLSecurityManager extends SecurityManager {
         this.checkPermission(perm);
     }
 
+    @Override
+    public void checkPackageAccess(String pkg) {
+//    	System.out.println(pkg);
+    }
+    
     public static class ExitTrappedException extends SecurityException {
         private static final long serialVersionUID = 1L;
     }

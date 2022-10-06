@@ -1,15 +1,21 @@
 --- ../src-base/minecraft/net/minecraft/util/Session.java
 +++ ../src-work/minecraft/net/minecraft/util/Session.java
-@@ -5,6 +5,8 @@
+@@ -2,9 +2,14 @@
+ 
+ import com.google.common.collect.Maps;
+ import com.mojang.authlib.GameProfile;
++import com.mojang.authlib.exceptions.AuthenticationException;
++import com.mojang.authlib.minecraft.MinecraftSessionService;
  import com.mojang.util.UUIDTypeAdapter;
  import java.util.Map;
  import java.util.UUID;
 +
++import net.minecraft.client.Minecraft;
 +import net.minecraftforge.fml.common.FMLLog;
  import net.minecraftforge.fml.relauncher.Side;
  import net.minecraftforge.fml.relauncher.SideOnly;
  
-@@ -15,9 +17,24 @@
+@@ -15,9 +20,24 @@
      private final String field_148257_b;
      private final String field_148258_c;
      private final Session.Type field_152429_d;
@@ -34,7 +40,35 @@
          this.field_74286_b = p_i1098_1_;
          this.field_148257_b = p_i1098_2_;
          this.field_148258_c = p_i1098_3_;
-@@ -49,11 +66,13 @@
+@@ -26,7 +46,7 @@
+ 
+     public String func_111286_b()
+     {
+-        return "token:" + this.field_148258_c + ":" + this.field_148257_b;
++        return "";
+     }
+ 
+     public String func_148255_b()
+@@ -41,19 +61,31 @@
+ 
+     public String func_148254_d()
+     {
+-        return this.field_148258_c;
++        return "";
+     }
+ 
++    /**
++     * Safe method to use to login to a server
++     * Can be used for authentication in place of providing the token to {@link MinecraftSessionService#joinServer(GameProfile, String, String)}
++     * @param servername
++     * @throws AuthenticationException
++     */
++    public void loginToServer(String servername) throws AuthenticationException {
++        Minecraft.func_71410_x().func_152347_ac().joinServer(func_148256_e(), field_148258_c, servername);
++    }
++    
+     public GameProfile func_148256_e()
+     {
          try
          {
              UUID uuid = UUIDTypeAdapter.fromString(this.func_148255_b());
@@ -50,7 +84,7 @@
          }
      }
  
-@@ -62,6 +81,19 @@
+@@ -62,6 +94,19 @@
          return this.field_152429_d;
      }
  

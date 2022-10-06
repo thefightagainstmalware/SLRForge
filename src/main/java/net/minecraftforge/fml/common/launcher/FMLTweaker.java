@@ -29,6 +29,13 @@ public class FMLTweaker implements ITweaker {
     public FMLTweaker()
     {
         System.setProperty("java.net.preferIPv4Stack", "true"); //Lets do this as early as possible. Vanilla does it in Main.main
+        if (System.getSecurityManager() != null && System.getSecurityManager() instanceof FMLSecurityManager) {
+//        if (System.getSecurityManager() != null && System.getSecurityManager().getClass().getName().replace(" ", "").equals("net.minecraftforge.fml.relauncher.FMLSecurityManager")) {
+        	return;
+        }
+        if (System.getSecurityManager() != null) {
+        	System.out.println("start" + System.getSecurityManager().getClass().getName() + "end");
+        }
         try
         {
             System.setSecurityManager(new FMLSecurityManager());

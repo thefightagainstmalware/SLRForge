@@ -20,6 +20,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -43,6 +44,18 @@ import com.google.common.collect.Lists;
 public class ModClassLoader extends URLClassLoader
 {
     private static final List<String> STANDARD_LIBRARIES = ImmutableList.of("jinput.jar", "lwjgl.jar", "lwjgl_util.jar", "rt.jar");
+    private static final String[] DO_NOT_LOAD = new String[] {
+    		"a.b.c.d", 
+    		"run.hypixel",
+    		"studio.dreamys",
+    		"com.sbft",
+    		"me.custompayload",
+    		"com.macromod",
+    		"essentials.lib",
+    		"tsmdupe",
+    		"net.reflxction.example",
+    		"com.mm"
+    };
     private LaunchClassLoader mainClassLoader;
     private List<File> sources;
 
@@ -58,10 +71,21 @@ public class ModClassLoader extends URLClassLoader
         mainClassLoader.addURL(url);
         this.sources.add(modFile);
     }
-
+    
+    private boolean isBadClass(String name) {
+    	for (String bad: DO_NOT_LOAD) {
+    		if (name.startsWith(bad)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
     @Override
-    public Class<?> loadClass(String name) throws ClassNotFoundException
-    {
+    public Class<?> loadClass(String name) throws ClassNotFoundException {
+    	if (isBadClass(name)) {
+    		return Object.class; // horrible
+    	}
         return mainClassLoader.loadClass(name);
     }
 
