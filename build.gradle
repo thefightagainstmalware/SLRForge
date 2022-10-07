@@ -3,23 +3,20 @@ buildscript {
         mavenCentral()
         maven {
             name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+            url = "https://files.minecraftforge.net/maven"
         }
         maven {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
+	  maven { url 'https://jitpack.io' }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'com.github.thefightagainstmalware:ForgeGradle:4df151dc83'
     }
 }
 
 repositories {
-        maven {
-            name = "local"
-            url = "file:///home/cpw/projects/repo"
-        }
 }
 apply plugin: "maven"
 apply plugin: "net.minecraftforge.gradle.patcher"
@@ -87,7 +84,7 @@ task changelog(type: JenkinsChangelog) {
     }
 
     outputs.upToDateWhen { false } // never up to date
-    serverRoot = "http://ci.jenkins.minecraftforge.net/"
+    serverRoot = "https://ci.jenkins.minecraftforge.net/"
     jobName = "minecraftforge"
     targetBuild = System.env['BUILD_NUMBER'] ?: 0;
     authName = "console_script"
@@ -195,7 +192,6 @@ task makeMdk(type: Zip) {
 tasks.build.dependsOn makeMdk
 
 // launch4j
-
 launch4j {
     jar = installer.archivePath.canonicalPath
     outfile = file("build/distributions/${project.name}-${project.version}-installer-win.exe").canonicalPath
@@ -238,7 +234,7 @@ uploadArchives {
 
         if (project.hasProperty('forgeMavenPass'))
         {
-            repository(url: "http://files.minecraftforge.net/maven/manage/upload") {
+            repository(url: "https://files.minecraftforge.net/maven/manage/upload") {
                 authentication(userName: "forge", password: project.getProperty('forgeMavenPass')) // the elvis operator. look it up.
             }
         }
