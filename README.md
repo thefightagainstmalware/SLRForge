@@ -12,3 +12,4 @@ TL;DR: Don't use (for now)
 - A mixin could access the session token
 - No protection against unauthorized file access (Discord, etc. can still be stolen)
 - No protection against native loaders (Probably a complete bypass)
+- Reflection can be used to get the session field
