@@ -6,10 +6,10 @@ TL;DR: Don't use (for now)
 
 ## What protections we have right now
 - Token methods return an empty string
+- Token is hidden in a class that can't be accessed except by the Session
 - SecurityManager can't be replaced
 
 ## Problems that still exist
 - A mixin could access the session token
 - No protection against unauthorized file access (Discord, etc. can still be stolen)
 - No protection against native loaders (Probably a complete bypass)
-- Reflection can be used to get the session field
