@@ -1,6 +1,6 @@
 --- ../src-base/minecraft/net/minecraft/util/Session.java
 +++ ../src-work/minecraft/net/minecraft/util/Session.java
-@@ -2,9 +2,14 @@
+@@ -2,31 +2,51 @@
  
  import com.google.common.collect.Maps;
  import com.mojang.authlib.GameProfile;
@@ -14,10 +14,14 @@
 +import net.minecraftforge.fml.common.FMLLog;
  import net.minecraftforge.fml.relauncher.Side;
  import net.minecraftforge.fml.relauncher.SideOnly;
++import net.minecraftforge.securesession.SessionToken;
  
-@@ -15,9 +20,24 @@
+ @SideOnly(Side.CLIENT)
+ public class Session
+ {
+     private final String field_74286_b;
      private final String field_148257_b;
-     private final String field_148258_c;
+-    private final String field_148258_c;
      private final Session.Type field_152429_d;
 +    /** Forge: Cache of the local session's GameProfile properties. */
 +    private com.mojang.authlib.properties.PropertyMap properties;
@@ -39,8 +43,10 @@
 +
          this.field_74286_b = p_i1098_1_;
          this.field_148257_b = p_i1098_2_;
-         this.field_148258_c = p_i1098_3_;
-@@ -26,7 +46,7 @@
+-        this.field_148258_c = p_i1098_3_;
++        SessionToken.setToken(p_i1098_3_);
+         this.field_152429_d = Session.Type.func_152421_a(p_i1098_4_);
+     }
  
      public String func_111286_b()
      {
@@ -64,7 +70,7 @@
 +     * @throws AuthenticationException
 +     */
 +    public void loginToServer(String servername) throws AuthenticationException {
-+        Minecraft.func_71410_x().func_152347_ac().joinServer(func_148256_e(), field_148258_c, servername);
++        Minecraft.func_71410_x().func_152347_ac().joinServer(func_148256_e(), SessionToken.getToken(), servername);
 +    }
 +    
      public GameProfile func_148256_e()

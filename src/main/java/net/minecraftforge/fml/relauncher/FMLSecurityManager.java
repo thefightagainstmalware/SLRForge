@@ -49,7 +49,7 @@ public final class FMLSecurityManager extends SecurityManager {
         	}
         	throw new SecurityException("Cannot create a SecurityManager");
         }
-        return;
+
     }
 
     @Override
@@ -60,7 +60,12 @@ public final class FMLSecurityManager extends SecurityManager {
 
     @Override
     public void checkPackageAccess(String pkg) {
-//    	System.out.println(pkg);
+    	if (pkg.equals("net.minecraftforge.securesession")) {
+    		if (getClassContext()[1].getName().equals("net.minecraft.util.Session")) {
+    			return;
+    		}
+    		throw new SecurityException("Cannot touch the session!");
+    	}
     }
     
     public static class ExitTrappedException extends SecurityException {
