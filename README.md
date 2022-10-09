@@ -7,10 +7,10 @@ TL;DR: Don't use (for now)
 ## What protections we have right now
 - Token methods return an empty string
 - Token is hidden in a class that can't be accessed except by the Session
+- Token is hidden from the tweakers
 - SecurityManager can't be replaced
 
 ## Problems that still exist
 - No protection against unauthorized file access (Discord, etc. can still be stolen)
 - No protection against native loaders (Probably a complete bypass)
 - No protection against getting the token from the launch args
-- Tweakers can still access session token
