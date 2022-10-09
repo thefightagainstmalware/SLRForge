@@ -10,6 +10,6 @@ TL;DR: Don't use (for now)
 - SecurityManager can't be replaced
 
 ## Problems that still exist
-- A mixin could access the session token
 - No protection against unauthorized file access (Discord, etc. can still be stolen)
 - No protection against native loaders (Probably a complete bypass)
+- No protection against getting the token from the launch args
