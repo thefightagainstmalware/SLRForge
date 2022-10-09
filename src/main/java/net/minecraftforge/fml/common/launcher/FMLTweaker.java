@@ -12,6 +12,7 @@ import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
 import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 import net.minecraftforge.fml.relauncher.FMLSecurityManager;
+import net.minecraftforge.securesession.SessionToken;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -30,12 +31,9 @@ public class FMLTweaker implements ITweaker {
     {
         System.setProperty("java.net.preferIPv4Stack", "true"); //Lets do this as early as possible. Vanilla does it in Main.main
         if (System.getSecurityManager() != null && System.getSecurityManager() instanceof FMLSecurityManager) {
-//        if (System.getSecurityManager() != null && System.getSecurityManager().getClass().getName().replace(" ", "").equals("net.minecraftforge.fml.relauncher.FMLSecurityManager")) {
         	return;
         }
-        if (System.getSecurityManager() != null) {
-        	System.out.println("start" + System.getSecurityManager().getClass().getName() + "end");
-        }
+        
         try
         {
             System.setSecurityManager(new FMLSecurityManager());
@@ -59,7 +57,7 @@ public class FMLTweaker implements ITweaker {
             this.launchArgs = Maps.newHashMap();
             Launch.blackboard.put("launchArgs", this.launchArgs);
         }
-
+        
         String classifier = null;
 
         for (String arg : args)

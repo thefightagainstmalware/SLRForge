@@ -1,0 +1,19 @@
+--- ../src-base/minecraft/net/minecraft/client/main/Main.java
++++ ../src-work/minecraft/net/minecraft/client/main/Main.java
+@@ -41,7 +41,6 @@
+         OptionSpec<String> optionspec8 = optionparser.accepts("proxyPass").withRequiredArg();
+         OptionSpec<String> optionspec9 = optionparser.accepts("username").withRequiredArg().defaultsTo("Player" + Minecraft.func_71386_F() % 1000L, new String[0]);
+         OptionSpec<String> optionspec10 = optionparser.accepts("uuid").withRequiredArg();
+-        OptionSpec<String> optionspec11 = optionparser.accepts("accessToken").withRequiredArg().required();
+         OptionSpec<String> optionspec12 = optionparser.accepts("version").withRequiredArg().required();
+         OptionSpec<Integer> optionspec13 = optionparser.accepts("width").withRequiredArg().ofType(Integer.class).defaultsTo(Integer.valueOf(854), new Integer[0]);
+         OptionSpec<Integer> optionspec14 = optionparser.accepts("height").withRequiredArg().ofType(Integer.class).defaultsTo(Integer.valueOf(480), new Integer[0]);
+@@ -103,7 +102,7 @@
+         String s5 = optionset.has(optionspec17) ? (String)optionspec17.value(optionset) : null;
+         String s6 = (String)optionset.valueOf(optionspec);
+         Integer integer = (Integer)optionset.valueOf(optionspec1);
+-        Session session = new Session((String)optionspec9.value(optionset), s4, (String)optionspec11.value(optionset), (String)optionspec18.value(optionset));
++        Session session = new Session((String)optionspec9.value(optionset), s4, (String)optionspec18.value(optionset));
+         GameConfiguration gameconfiguration = new GameConfiguration(new GameConfiguration.UserInformation(session, propertymap, propertymap1, proxy), new GameConfiguration.DisplayInformation(i, j, flag, flag1), new GameConfiguration.FolderInformation(file1, file3, file2, s5), new GameConfiguration.GameInformation(flag2, s3), new GameConfiguration.ServerInformation(s6, integer.intValue()));
+         Runtime.getRuntime().addShutdownHook(new Thread("Client Shutdown Thread")
+         {

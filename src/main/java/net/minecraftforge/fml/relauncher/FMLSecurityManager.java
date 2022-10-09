@@ -61,10 +61,12 @@ public final class FMLSecurityManager extends SecurityManager {
     @Override
     public void checkPackageAccess(String pkg) {
     	if (pkg.equals("net.minecraftforge.securesession")) {
-    		if (getClassContext()[1].getName().equals("net.minecraft.util.Session")) {
-    			return;
+    		for (Class<?> c: getClassContext()) {
+    			if (c.getName().equals("net.minecraft.util.Session") || c.getName().equals("net.minecraft.launchwrapper.Launch")) {
+    				return;
+    			}
     		}
-    		throw new SecurityException("Cannot touch the session!");
+    		throw new SecurityException("Cannot touch the session! You are " + getClassContext()[1].getName());
     	}
     }
     
