@@ -1,3 +1,6 @@
+# This project is discontinued, use [NoSession](https://github.com/thefightagainstmalware/NoSession) instead 
+NoSession accomplishes what SLRForge was trying to do, but in the proper way without cutting corners
+
 # SLR Forge
 SLR (short for Slightly Less Risky) Forge is a fork of 1.8.9 Forge that tries to reduce the attack surface for getting your information stolen.<br>
 It works with (almost) all existing 1.8.9 Forge mods!
